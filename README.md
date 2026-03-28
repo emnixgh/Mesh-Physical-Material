@@ -1,4 +1,4 @@
-# Mesh Physical Material
+# Mesh Physical Material Extension for GDevelop 5
 
 The Mesh Physical Material extension allows you to apply physically accurate materials to meshes using the THREE.js library.
 
