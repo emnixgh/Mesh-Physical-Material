@@ -1,0 +1,493 @@
+{
+  "author": "",
+  "category": "",
+  "dimension": "3D",
+  "extensionNamespace": "",
+  "fullName": "Mesh physical material",
+  "gdevelopVersion": "",
+  "helpPath": "",
+  "iconUrl": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMy4wLjMsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iSWNvbnMiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgMzIgMzIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDMyIDMyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDpub25lO3N0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoyO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDoxMDt9DQo8L3N0eWxlPg0KPGc+DQoJPHBhdGggZD0iTTE2LDE1LjhsMTIuMy03LjFMMTYuNSwyLjFjLTAuMy0wLjItMC43LTAuMi0xLDBMMy43LDguOEwxNiwxNS44eiIvPg0KCTxwYXRoIGQ9Ik0xNSwxNy42TDMsMTAuN3YxMi41YzAsMC40LDAuMiwwLjcsMC41LDAuOUwxNSwzMC42VjE3LjZ6Ii8+DQoJPHBhdGggZD0iTTE3LDE3LjZ2MTNsMTEuNS02LjVjMC4zLTAuMiwwLjUtMC41LDAuNS0wLjlWMTAuN0wxNywxNy42eiIvPg0KPC9nPg0KPC9zdmc+DQo=",
+  "name": "MeshPhysicalMaterial",
+  "previewIconUrl": "https://asset-resources.gdevelop.io/public-resources/Icons/Glyphster Pack/Master/SVG/Graphic Design/63b8c89da755615b942bb3cac1fff351138d7cfbf62829391b1361f7e535be1f_Graphic Design_3d_cube_isometric.svg",
+  "shortDescription": "",
+  "version": "0.2.2",
+  "description": "",
+  "tags": [],
+  "authorIds": [
+    "ejq9xark6AUrjxxkerSlnKvYic93"
+  ],
+  "dependencies": [],
+  "globalVariables": [],
+  "sceneVariables": [],
+  "eventsFunctions": [],
+  "eventsFunctionsFolderStructure": {
+    "folderName": "__ROOT"
+  },
+  "eventsBasedBehaviors": [
+    {
+      "description": "",
+      "fullName": "Mesh physical material",
+      "name": "MeshPhysicalMaterial",
+      "objectType": "Scene3D::Model3DObject",
+      "eventsFunctions": [
+        {
+          "description": "Mesh physical material with textures",
+          "fullName": "Mesh physical material with textures",
+          "functionType": "Action",
+          "group": "Mesh physical material",
+          "name": "MeshPhysicalMaterialTextures",
+          "sentence": "Apply to _PARAM0_ a physical material with color _PARAM2_, albedo map _PARAM3_, normal map _PARAM4_, ambient occlusion map _PARAM5_, bump map _PARAM6_, specular map _PARAM7_, anisotropy map _PARAM8_, emmisive map _PARAM9_, displacement map _PARAM10_, alpha map _PARAM11_, roughness _PARAM12_, metallnes _PARAM13_, IOR _PARAM14_, specular intensity _PARAM15_, iridescence _PARAM16_, iridescence IOR _PARAM17_, reflectivity _PARAM18_, flat shading _PARAM19_, wireframe _PARAM20_, texture wrap X _PARAM21_, texture wrap Y _PARAM22_, texture offset Y _PARAM25_, texture offset X _PARAM26_, reflection type _PARAM23_ with quality _PARAM24_, anisotropy filtering _PARAM27_",
+          "events": [
+            {
+              "type": "BuiltinCommonInstructions::JsCode",
+              "inlineCode": [
+                "objects.forEach((object) => {",
+                " const ThreeObject = object.get3DRendererObject();",
+                " if (!ThreeObject) return;",
+                "",
+                " if (!ThreeObject.__reflectionData) {",
+                "  const Scene = runtimeScene.getLayer(\"Base Layer\").getRenderer().getThreeScene();",
+                "  const Renderer = runtimeScene.getGame().getRenderer().getThreeRenderer();",
+                "  const Res = eventsFunctionContext.getArgument(\"Res\") || 256;",
+                "",
+                "  const CubeRenderTarget = new THREE.WebGLCubeRenderTarget(Res, {",
+                "   format: THREE.RGBAFormat,",
+                "   generateMipmaps: true,",
+                "   minFilter: THREE.LinearMipmapLinearFilter,",
+                "   magFilter: THREE.LinearFilter",
+                "  });",
+                "  CubeRenderTarget.texture.mapping = THREE.CubeReflectionMapping;",
+                "  CubeRenderTarget.texture.type = THREE.HalfFloatType;",
+                "",
+                "  const CubeCamera = new THREE.CubeCamera(1, 10000, CubeRenderTarget);",
+                "  CubeCamera.layers.enableAll();",
+                "  Scene.add(CubeCamera);",
+                "  CubeCamera.scale.set(1, -1, 1);",
+                "",
+                "  const TextureLoader = new THREE.TextureLoader();",
+                "  const WrapS = eventsFunctionContext.getArgument(\"WrapS\");",
+                "  const WrapT = eventsFunctionContext.getArgument(\"WrapT\");",
+                "  const XOffset = eventsFunctionContext.getArgument(\"Xoff\");",
+                "  const YOffset = eventsFunctionContext.getArgument(\"Yoff\");",
+                "  const Anisotropy = eventsFunctionContext.getArgument(\"Filter\");",
+                "",
+                "  function loadTexture(path) {",
+                "   if (!path) return null;",
+                "   return TextureLoader.load(path, (texture) => {",
+                "    texture.wrapS = THREE.RepeatWrapping;",
+                "    texture.wrapT = THREE.RepeatWrapping;",
+                "    texture.repeat.set(WrapS, WrapT);",
+                "    texture.offset.set(XOffset, YOffset);",
+                "    texture.anisotropy = Anisotropy;",
+                "   });",
+                "  }",
+                "",
+                "  const material = new THREE.MeshPhysicalMaterial({",
+                "   wireframe: eventsFunctionContext.getArgument(\"Wireframe\"),",
+                "   flatShading: eventsFunctionContext.getArgument(\"FlatShading\"),",
+                "   color: new THREE.Color(gdjs.rgbOrHexStringToNumber(eventsFunctionContext.getArgument(\"Color\"))),",
+                "   map: loadTexture(eventsFunctionContext.getArgument(\"Map\")),",
+                "   aoMap: loadTexture(eventsFunctionContext.getArgument(\"AOMap\")),",
+                "   normalMap: loadTexture(eventsFunctionContext.getArgument(\"NormalMap\")),",
+                "   displacementMap: loadTexture(eventsFunctionContext.getArgument(\"DisplacementMap\")),",
+                "   alphaMap: loadTexture(eventsFunctionContext.getArgument(\"AlphaMap\")),",
+                "   emissiveMap: loadTexture(eventsFunctionContext.getArgument(\"EmissiveMap\")),",
+                "   roughness: eventsFunctionContext.getArgument(\"Roughness\"),",
+                "   metalness: eventsFunctionContext.getArgument(\"Metalness\"),",
+                "   ior: eventsFunctionContext.getArgument(\"IOR\"),",
+                "   reflectivity: eventsFunctionContext.getArgument(\"Reflectivity\"),",
+                "   envMapIntensity: 1.0",
+                "  });",
+                "",
+                "  ThreeObject.__reflectionData = {",
+                "   CubeCamera,",
+                "   CubeRenderTarget,",
+                "   Renderer,",
+                "   Material: material,",
+                "   Scene",
+                "  };",
+                "",
+                "  ThreeObject.traverse((node) => {",
+                "   if (node.isMesh) node.material = material;",
+                "  });",
+                " }",
+                "",
+                " const data = ThreeObject.__reflectionData;",
+                " const RefType = eventsFunctionContext.getArgument(\"RefType\");",
+                " const mat = data.Material;",
+                "",
+                " if (RefType === \"Dynamic cubemap\") {",
+                "  if (mat.envMap !== data.CubeRenderTarget.texture) {",
+                "   mat.envMap = data.CubeRenderTarget.texture;",
+                "   mat.needsUpdate = true;",
+                "  }",
+                "",
+                "  ThreeObject.visible = false;",
+                "  data.CubeCamera.position.copy(ThreeObject.position);",
+                "  ",
+                "  const currentAutoClear = data.Renderer.autoClear;",
+                "  data.Renderer.autoClear = true;",
+                "  data.CubeCamera.update(data.Renderer, data.Scene);",
+                "  data.Renderer.autoClear = currentAutoClear;",
+                "  ",
+                "  ThreeObject.visible = true;",
+                " } else {",
+                "",
+                "  if (mat.envMap !== null) {",
+                "   mat.envMap = null;",
+                "   mat.needsUpdate = true;",
+                "  }",
+                " }",
+                "});",
+                ""
+              ],
+              "parameterObjects": "Object",
+              "useStrict": true,
+              "eventsSheetExpanded": true
+            }
+          ],
+          "parameters": [
+            {
+              "description": "Object",
+              "name": "Object",
+              "supplementaryInformation": "Scene3D::Model3DObject",
+              "type": "object"
+            },
+            {
+              "description": "Behavior",
+              "name": "Behavior",
+              "supplementaryInformation": "MeshPhysicalMaterial::MeshPhysicalMaterial",
+              "type": "behavior"
+            },
+            {
+              "description": "Color",
+              "name": "Color",
+              "type": "color"
+            },
+            {
+              "description": "Albedo map",
+              "name": "Map",
+              "type": "imageResource"
+            },
+            {
+              "description": "Normal map",
+              "name": "NormalMap",
+              "type": "imageResource"
+            },
+            {
+              "description": "Ambient occlusion map",
+              "name": "AOMap",
+              "type": "imageResource"
+            },
+            {
+              "description": "Bump map",
+              "name": "BumpMap",
+              "type": "imageResource"
+            },
+            {
+              "description": "Specular map",
+              "name": "SpecularMap",
+              "type": "imageResource"
+            },
+            {
+              "description": "Anisotropy map",
+              "name": "AnisotropyMap",
+              "type": "imageResource"
+            },
+            {
+              "description": "Emissive map",
+              "name": "EmissiveMap",
+              "type": "imageResource"
+            },
+            {
+              "description": "Displacement map",
+              "name": "DisplacementMap",
+              "type": "imageResource"
+            },
+            {
+              "description": "Alpha map",
+              "name": "AlphaMap",
+              "type": "imageResource"
+            },
+            {
+              "description": "Roughness (0-1)",
+              "name": "Roughness",
+              "type": "expression"
+            },
+            {
+              "description": "Metalness (0-1)",
+              "name": "Metallnes",
+              "type": "expression"
+            },
+            {
+              "description": "IOR (1-2.333)",
+              "name": "IOR",
+              "type": "expression"
+            },
+            {
+              "description": "Specular intensity (0-1)",
+              "name": "SpecularIntensity",
+              "type": "expression"
+            },
+            {
+              "description": "Iridescence (0-1)",
+              "name": "Iridescence",
+              "type": "expression"
+            },
+            {
+              "description": "iridescence IOR (1-2.333)",
+              "name": "iridescenceIOR",
+              "type": "expression"
+            },
+            {
+              "description": "Reflectivity (0-1)",
+              "name": "Reflectivity",
+              "type": "expression"
+            },
+            {
+              "description": "Flat shading",
+              "name": "FlatShading",
+              "type": "trueorfalse"
+            },
+            {
+              "description": "Wireframe",
+              "name": "Wireframe",
+              "type": "trueorfalse"
+            },
+            {
+              "description": "Wrap X",
+              "name": "WrapS",
+              "type": "expression"
+            },
+            {
+              "description": "Wrap Y",
+              "name": "WrapT",
+              "type": "expression"
+            },
+            {
+              "description": "Reflection resolution",
+              "name": "RefType",
+              "supplementaryInformation": "[\"Dynamic cubemap\",\"Default\"]",
+              "type": "stringWithSelector"
+            },
+            {
+              "description": "Dynamic cubemap reflection resolution (Default 256)",
+              "name": "Res",
+              "type": "expression"
+            },
+            {
+              "description": "Y Texture offset (0-1)",
+              "name": "Xoff",
+              "type": "expression"
+            },
+            {
+              "description": "X Texture offset (0-1)",
+              "name": "Yoff",
+              "type": "expression"
+            },
+            {
+              "description": "Texture anisotropy filtering",
+              "name": "Filter",
+              "supplementaryInformation": "[\"2\",\"4\",\"6\",\"8\",\"10\",\"12\",\"14\",\"16\"]",
+              "type": "numberWithChoices"
+            }
+          ],
+          "objectGroups": []
+        },
+        {
+          "description": "Mesh physical material with color",
+          "fullName": "Mesh physical material with color",
+          "functionType": "Action",
+          "group": "Mesh physical material",
+          "name": "MeshPhysicalMaterialColor",
+          "sentence": "Apply to _PARAM0_ a physical material with color _PARAM2_, roughness _PARAM3_, metallnes _PARAM4_, IOR _PARAM5_, specular intensity _PARAM6_, iridescence _PARAM7_, iridescence IOR _PARAM8_, reflectivity _PARAM9_, flat shading _PARAM10_, wireframe _PARAM11_, reflection type _PARAM12_ with quality _PARAM13_",
+          "events": [
+            {
+              "type": "BuiltinCommonInstructions::JsCode",
+              "inlineCode": [
+                "objects.forEach((object) => {",
+                " const ThreeObject = object.get3DRendererObject();",
+                " if (!ThreeObject) return;",
+                "",
+                " if (!ThreeObject.__reflectionData) {",
+                "  const Scene = runtimeScene.getLayer(\"Base Layer\").getRenderer().getThreeScene();",
+                "  const Renderer = runtimeScene.getGame().getRenderer().getThreeRenderer();",
+                "  const Res = eventsFunctionContext.getArgument(\"Res\") || 256;",
+                "",
+                "  const CubeRenderTarget = new THREE.WebGLCubeRenderTarget(Res, {",
+                "   format: THREE.RGBAFormat,",
+                "   generateMipmaps: true,",
+                "   minFilter: THREE.LinearMipmapLinearFilter,",
+                "   magFilter: THREE.LinearFilter",
+                "  });",
+                "  CubeRenderTarget.texture.mapping = THREE.CubeReflectionMapping;",
+                "  CubeRenderTarget.texture.type = THREE.HalfFloatType;",
+                "",
+                "  const CubeCamera = new THREE.CubeCamera(1, 10000, CubeRenderTarget);",
+                "  CubeCamera.layers.enableAll();",
+                "  Scene.add(CubeCamera);",
+                "  CubeCamera.scale.set(1, -1, 1);",
+                "",
+                "  const MeshPhysicalMaterial = new THREE.MeshPhysicalMaterial({",
+                "   wireframe: eventsFunctionContext.getArgument(\"Wireframe\"),",
+                "   flatShading: eventsFunctionContext.getArgument(\"FlatShading\"),",
+                "   color: new THREE.Color(gdjs.rgbOrHexStringToNumber(eventsFunctionContext.getArgument(\"Color\"))),",
+                "   emissive: new THREE.Color(0x000000),",
+                "   roughness: eventsFunctionContext.getArgument(\"Roughness\"),",
+                "   metalness: eventsFunctionContext.getArgument(\"Metalness\"),",
+                "   ior: eventsFunctionContext.getArgument(\"IOR\"),",
+                "   reflectivity: eventsFunctionContext.getArgument(\"Reflectivity\"),",
+                "   iridescence: eventsFunctionContext.getArgument(\"Iridescence\"),",
+                "   iridescenceIOR: eventsFunctionContext.getArgument(\"IridescenceIOR\"),",
+                "   specularIntensity: eventsFunctionContext.getArgument(\"SpecularIntensity\"),",
+                "   envMapIntensity: 1.0",
+                "  });",
+                "",
+                "  ThreeObject.__reflectionData = {",
+                "   CubeCamera,",
+                "   CubeRenderTarget,",
+                "   Renderer,",
+                "   Material: MeshPhysicalMaterial",
+                "  };",
+                "",
+                "  ThreeObject.traverse((node) => {",
+                "   if (node.isMesh) node.material = MeshPhysicalMaterial;",
+                "  });",
+                " }",
+                "",
+                " const data = ThreeObject.__reflectionData;",
+                " const RefType = eventsFunctionContext.getArgument(\"RefType\");",
+                " const Scene = runtimeScene.getLayer(\"Base Layer\").getRenderer().getThreeScene();",
+                "",
+                " if (RefType === \"Dynamic cubemap\") {",
+                "  if (data.Material.envMap !== data.CubeRenderTarget.texture) {",
+                "   data.Material.envMap = data.CubeRenderTarget.texture;",
+                "   data.Material.needsUpdate = true;",
+                "  }",
+                "",
+                "  ThreeObject.visible = false;",
+                "  data.CubeCamera.position.copy(ThreeObject.position);",
+                "  ",
+                "  const currentAutoClear = data.Renderer.autoClear;",
+                "  data.Renderer.autoClear = true;",
+                "  data.CubeCamera.update(data.Renderer, Scene);",
+                "  data.Renderer.autoClear = currentAutoClear;",
+                "  ",
+                "  ThreeObject.visible = true;",
+                " } else {",
+                "",
+                "  if (data.Material.envMap !== null) {",
+                "   data.Material.envMap = null;",
+                "   data.Material.needsUpdate = true;",
+                "  }",
+                " }",
+                "});",
+                ""
+              ],
+              "parameterObjects": "Object",
+              "useStrict": true,
+              "eventsSheetExpanded": true
+            }
+          ],
+          "parameters": [
+            {
+              "description": "Object",
+              "name": "Object",
+              "supplementaryInformation": "Scene3D::Model3DObject",
+              "type": "object"
+            },
+            {
+              "description": "Behavior",
+              "name": "Behavior",
+              "supplementaryInformation": "MeshPhysicalMaterial::MeshPhysicalMaterial",
+              "type": "behavior"
+            },
+            {
+              "description": "Color",
+              "name": "Color",
+              "type": "color"
+            },
+            {
+              "description": "Roughness (0-1)",
+              "name": "Roughness",
+              "type": "expression"
+            },
+            {
+              "description": "Metalness (0-1)",
+              "name": "Metallnes",
+              "type": "expression"
+            },
+            {
+              "description": "IOR (1-2.333)",
+              "name": "IOR",
+              "type": "expression"
+            },
+            {
+              "description": "Specular intensity (0-1)",
+              "name": "SpecularIntensity",
+              "type": "expression"
+            },
+            {
+              "description": "Iridescence (0-1)",
+              "name": "Iridescence",
+              "type": "expression"
+            },
+            {
+              "description": "iridescence IOR (1-2.333)",
+              "name": "iridescenceIOR",
+              "type": "expression"
+            },
+            {
+              "description": "Reflectivity (0-1)",
+              "name": "Reflectivity",
+              "type": "expression"
+            },
+            {
+              "description": "Flat shading",
+              "name": "FlatShading",
+              "type": "trueorfalse"
+            },
+            {
+              "description": "Wireframe",
+              "name": "Wireframe",
+              "type": "trueorfalse"
+            },
+            {
+              "description": "Reflection type",
+              "name": "RefType",
+              "supplementaryInformation": "[\"Dynamic cubemap\",\"Default\"]",
+              "type": "stringWithSelector"
+            },
+            {
+              "description": "Dynamic cubemap reflection resolution (Default 256)",
+              "name": "Res",
+              "type": "expression"
+            }
+          ],
+          "objectGroups": []
+        }
+      ],
+      "eventsFunctionsFolderStructure": {
+        "folderName": "__ROOT",
+        "children": [
+          {
+            "folderName": "Mesh physical material",
+            "children": [
+              {
+                "functionName": "MeshPhysicalMaterialTextures"
+              },
+              {
+                "functionName": "MeshPhysicalMaterialColor"
+              }
+            ]
+          }
+        ]
+      },
+      "propertyDescriptors": [],
+      "propertiesFolderStructure": {
+        "folderName": "__ROOT"
+      }
+    }
+  ],
+  "eventsBasedObjects": []
+}
